@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "GameStateManager.h"
+#include "../MainMenuState.h"
 
 Engine* Engine::s_instance = nullptr;
 
@@ -38,6 +39,8 @@ bool Engine::Init(unsigned width, unsigned height, const std::string& title, boo
 	m_windowWidth = m_window.getSize().x;
 	m_windowHeight = m_window.getSize().y;
 
+	GameStateManager::GetInstance()->PushState(new MainMenuState());
+
 	if (!m_window.isOpen())
 	{
 		return false;
@@ -68,7 +71,7 @@ void Engine::Run()
 void Engine::HandleEvents()
 {
 	InputHandler::GetInstance()->EventHandler(m_window);
-	GameStateManager::GetInstance()->CurrentState()->HandleInput(m_window);
+	GameStateManager::GetInstance()->CurrentState()->HandleInput();
 }
 
 void Engine::Update()
@@ -80,7 +83,7 @@ void Engine::Update()
 void Engine::Render()
 {
 	m_window.clear();
-	GameStateManager::GetInstance()->CurrentState()->Render(m_window);
+	GameStateManager::GetInstance()->CurrentState()->Render();
 	m_window.display();
 }
 
