@@ -176,6 +176,7 @@
     <ClCompile Include="Engine\tinyxmlerror.cpp" />
     <ClCompile Include="Engine\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Engine\tinystr.h" />
     <ClInclude Include="Engine\tinyxml.h" />
+    <ClInclude Include="MainMenuState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
