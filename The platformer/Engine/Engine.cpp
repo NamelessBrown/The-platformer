@@ -77,7 +77,7 @@ void Engine::HandleEvents()
 void Engine::Update()
 {
 	const float dt = Timer::GetInstance()->GetDeltaTime();
-	GameStateManager::GetInstance()->CurrentState()->Update(m_window, dt);
+	GameStateManager::GetInstance()->CurrentState()->Update(dt);
 }
 
 void Engine::Render()
