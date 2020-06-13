@@ -4,6 +4,7 @@
 #include "MapParser.h"
 #include "Camera.h"
 #include "Timer.h"
+#include "GameStateManager.h"
 
 Engine* Engine::s_instance = nullptr;
 
@@ -67,26 +68,25 @@ void Engine::Run()
 void Engine::HandleEvents()
 {
 	InputHandler::GetInstance()->EventHandler(m_window);
+	GameStateManager::GetInstance()->CurrentState()->HandleInput(m_window);
 }
 
 void Engine::Update()
 {
-	m_deltaTime = Timer::GetInstance()->GetDeltaTime();
-	std::cout << "framerate: " << m_deltaTime << '\n';
-	Camera::GetInstance()->Update(m_deltaTime);
+	const float dt = Timer::GetInstance()->GetDeltaTime();
+	GameStateManager::GetInstance()->CurrentState()->Update(m_window, dt);
 }
 
 void Engine::Render()
 {
 	m_window.clear();
-
-	/* Draw stuff here */
-
+	GameStateManager::GetInstance()->CurrentState()->Render(m_window);
 	m_window.display();
 }
 
 void Engine::Quit()
 {
+	GameStateManager::GetInstance()->Quit();
 	Timer::GetInstance()->Quit();
 	MapParser::GetInstance()->Quit();
 	Camera::GetInstance()->Quit();
