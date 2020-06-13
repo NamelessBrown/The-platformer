@@ -162,6 +162,8 @@
     <ClCompile Include="Engine\CollisionHandler.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameState.cpp" />
+    <ClCompile Include="Engine\GameStateManager.cpp" />
     <ClCompile Include="Engine\InputHandler.cpp" />
     <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Engine\MapParser.cpp" />
@@ -182,6 +184,8 @@
     <ClInclude Include="Engine\CollisionHandler.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameState.h" />
+    <ClInclude Include="Engine\GameStateManager.h" />
     <ClInclude Include="Engine\InputHandler.h" />
     <ClInclude Include="Engine\Layer.h" />
     <ClInclude Include="Engine\Map.h" />
