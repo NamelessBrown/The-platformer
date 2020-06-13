@@ -24,35 +24,43 @@ void TextureManager::Quit()
     delete s_instance;
 }
 
+const sf::Sprite& TextureManager::GetSprite(const std::string& id) const
+{
+    return m_spriteMap.at(id);
+}
+
+const sf::Font& TextureManager::GetFont(const std::string& id) const
+{
+    return m_fontMap.at(id);
+}
+
 TextureManager::~TextureManager()
 {
-    for (auto it = m_spriteMap.begin(); it != m_spriteMap.end(); it++)
-    {
-        std::cout << "Deleted sprite ID: " << it->first << '\n';
-        delete it->second;
-    }
-
-    for (auto it = m_textureMap.begin(); it != m_textureMap.end(); it++)
-    {
-        std::cout << "Deleted textured ID: " << it->first << '\n';
-        delete it->second;
-    }
-
-
     m_spriteMap.clear();
 }
 
-bool TextureManager::Load(const std::string& id, const std::string& filename)
+bool TextureManager::LoadFont(const std::string& id, const std::string& filename)
+{
+    m_fontMap[id] = sf::Font();
+    if (!m_fontMap[id].loadFromFile(filename))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool TextureManager::LoadTexture(const std::string& id, const std::string& filename)
 {
     sf::Texture texture;
     texture.loadFromFile(filename);
-    m_textureMap[id] = new sf::Texture(texture);
-    m_textureMap[id]->loadFromFile(filename);
+    m_textureMap[id] = sf::Texture(texture);
+    m_textureMap[id].loadFromFile(filename);
 
     sf::Sprite sprite;
     sprite.setTexture(texture);
-    m_spriteMap[id] = new sf::Sprite(sprite);
-    m_spriteMap[id]->setTexture(*m_textureMap[id]);
+    m_spriteMap[id] = sf::Sprite(sprite);
+    m_spriteMap[id].setTexture(m_textureMap[id]);
 
     //m_textureMap[id].loadFromFile(filename);
     //m_spriteMap[id].setTexture(m_textureMap[id]);
@@ -67,19 +75,26 @@ void TextureManager::Remove(const std::string& id)
 void TextureManager::Draw(std::string id, int x, int y)
 {
     const sf::Vector2f camera = Camera::GetInstance()->GetPosition() * 0.5f;
-    m_spriteMap[id]->setPosition({ (float)x - camera.x, (float)y - camera.y });
+    m_spriteMap[id].setPosition({ (float)x - camera.x, (float)y - camera.y });
 
-    Engine::GetInstance()->GetWindow().draw(*m_spriteMap[id]);
+    Engine::GetInstance()->GetWindow().draw(m_spriteMap[id]);
+}
+
+void TextureManager::DrawText(sf::Text text, int x, int y)
+{
+    const sf::Vector2f camera = Camera::GetInstance()->GetPosition();
+    text.setPosition({ (float)x - camera.x, (float)y - camera.y });
+    Engine::GetInstance()->GetWindow().draw(text);
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, Flip flip)
 {
     const sf::Vector2f camera = Camera::GetInstance()->GetPosition();
-    const sf::IntRect defaultRect = m_spriteMap[id]->getTextureRect();
-    m_spriteMap[id]->setPosition({ (float)x - camera.x, (float)y - camera.y });
+    const sf::IntRect defaultRect = m_spriteMap[id].getTextureRect();
+    m_spriteMap[id].setPosition({ (float)x - camera.x, (float)y - camera.y });
 
     sf::IntRect srcRect(width * frame, height * row, width, height);
-    m_spriteMap[id]->setTextureRect(srcRect);
+    m_spriteMap[id].setTextureRect(srcRect);
 
     if (flip == Flip::left)
     {
@@ -88,21 +103,21 @@ void TextureManager::DrawFrame(std::string id, int x, int y, int width, int heig
             srcRect.left = width;
         }
 
-        m_spriteMap[id]->setTextureRect(sf::IntRect(srcRect.left, srcRect.top, -srcRect.width, srcRect.height));
+        m_spriteMap[id].setTextureRect(sf::IntRect(srcRect.left, srcRect.top, -srcRect.width, srcRect.height));
     }
 
-    Engine::GetInstance()->GetWindow().draw(*m_spriteMap[id]);
-    m_spriteMap[id]->setTextureRect(defaultRect);
+    Engine::GetInstance()->GetWindow().draw(m_spriteMap[id]);
+    m_spriteMap[id].setTextureRect(defaultRect);
 }
 
 void TextureManager::DrawTile(std::string id, int tileSize, int x, int y, int row, int frame)
 {
     const sf::Vector2f camera = Camera::GetInstance()->GetPosition();
-    sf::IntRect defaultRect = m_spriteMap[id]->getTextureRect();
-    m_spriteMap[id]->setPosition({ (float)x - camera.x, (float)y - camera.y });
+    sf::IntRect defaultRect = m_spriteMap[id].getTextureRect();
+    m_spriteMap[id].setPosition({ (float)x - camera.x, (float)y - camera.y });
 
     sf::IntRect srcRect(tileSize * frame, tileSize * row, tileSize, tileSize);
-    m_spriteMap[id]->setTextureRect(srcRect);
-    Engine::GetInstance()->GetWindow().draw(*m_spriteMap[id]);
-    m_spriteMap[id]->setTextureRect(defaultRect);
+    m_spriteMap[id].setTextureRect(srcRect);
+    Engine::GetInstance()->GetWindow().draw(m_spriteMap[id]);
+    m_spriteMap[id].setTextureRect(defaultRect);
 }
