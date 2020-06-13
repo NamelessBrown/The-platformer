@@ -7,7 +7,7 @@ TileLayer::TileLayer(unsigned tileSize, unsigned rowCount, unsigned columnCount,
 {
 	for (unsigned i = 0; i < m_tileSets.size(); i++)
 	{
-		TextureManager::GetInstance()->Load(m_tileSets[i].name, "map/" + m_tileSets[i].source);
+		TextureManager::GetInstance()->LoadTexture(m_tileSets[i].name, "map/" + m_tileSets[i].source);
 	}
 }
 
