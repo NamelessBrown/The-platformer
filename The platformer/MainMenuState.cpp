@@ -3,7 +3,7 @@
 
 MainMenuState::MainMenuState()
 {
-	TextureManager::GetInstance()->Load("donuts", "Textures/DDD.png");
+	TextureManager::GetInstance()->LoadTexture("donuts", "Textures/DDD.png");
 }
 
 MainMenuState::~MainMenuState()
