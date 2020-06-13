@@ -21,7 +21,7 @@ public:
 	void Remove(const std::string& id);
 	/* Draw function--Draws the whole sprite */
 	void Draw(std::string id, int x, int y);
-	void DrawText(sf::Text text, int x, int y);
+	void DrawText(const std::string& fontID, const std::string& text, int fontSize, int x, int y);
 	/* Draw Frame function--Used for animations */
 	void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, Flip flip = Flip::none);
 	void DrawTile(std::string id, int tileSize, int x, int y, int row, int frame);

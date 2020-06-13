@@ -80,11 +80,15 @@ void TextureManager::Draw(std::string id, int x, int y)
     Engine::GetInstance()->GetWindow().draw(m_spriteMap[id]);
 }
 
-void TextureManager::DrawText(sf::Text text, int x, int y)
+void TextureManager::DrawText(const std::string& fontID, const std::string& text, int fontSize, int x, int y)
 {
     const sf::Vector2f camera = Camera::GetInstance()->GetPosition();
-    text.setPosition({ (float)x - camera.x, (float)y - camera.y });
-    Engine::GetInstance()->GetWindow().draw(text);
+    sf::Text tex;
+    tex.setFont(m_fontMap[fontID]);
+    tex.setString(text);
+    tex.setCharacterSize(fontSize);
+    tex.setPosition({ (float)x - camera.x, (float)y - camera.y });
+    Engine::GetInstance()->GetWindow().draw(tex);
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, Flip flip)
