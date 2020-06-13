@@ -99,6 +99,6 @@ void Button::SetPositionFromSprite(const int position)
 void Button::Draw(int x, int y)
 {
 	TextureManager::GetInstance()->Draw(m_spriteID, x, y);
-	TextureManager::GetInstance()->DrawText(m_fontID, m_text, m_fontSize, x, y);
+	TextureManager::GetInstance()->DrawText(m_fontID, m_text, m_fontSize, x + m_positionFromSprite, y);
 }
 
