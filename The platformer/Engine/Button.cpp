@@ -1,20 +1,22 @@
 #include "Button.h"
+#include "TextureManager.h"
 
-Button::Button(const sf::Vector2f& position, const sf::Font& font, const sf::Texture& texture, const int textposition)
-	/*
-		The textpositionX is how far you want the text position in the {X,Y} direction to be from the GUI button. 
-	*/
+Button::Button(const std::string& spriteID, const std::string& filename)
 {
-	m_texture = texture;
-	m_font = font;
-	m_text.setFont(m_font);
+	TextureManager::GetInstance()->LoadTexture(spriteID, filename);
 	m_text.setString("Defualt");
 	m_text.setCharacterSize(20);
+	m_spriteID = spriteID;
+	m_positionFromSprite = 0;
+}
 
-	m_sprite.setTexture(m_texture);
-	m_sprite.setPosition(position);
-
-	m_text.setPosition(m_sprite.getPosition().x + (textposition * 4), m_sprite.getPosition().y + textposition);
+Button::Button(const std::string& fontID, const std::string& filename, const unsigned fontSize)
+{
+	TextureManager::GetInstance()->LoadFont(fontID, filename);
+	m_text.setString("Defualt");
+	m_text.setCharacterSize(fontSize);
+	m_fontID = fontID;
+	m_positionFromSprite = 0;
 }
 
 Button::~Button()
@@ -22,11 +24,14 @@ Button::~Button()
 }
 
 //Checks to see if the sprite has been clicked on. Returns bool is the mouse is clicked and the sprite is on the button!
-bool Button::IsClicked(const sf::Sprite& sprite)
+bool Button::IsClicked(const std::string& spriteID)
 {
 	const sf::Mouse mouse;
 
-	if (m_sprite.getGlobalBounds().contains(sprite.getPosition()) && mouse.isButtonPressed(sf::Mouse::Left) && !m_clicked)
+	const sf::Sprite thisSprite = TextureManager::GetInstance()->GetSprite(m_spriteID);
+	const sf::Sprite sprite = TextureManager::GetInstance()->GetSprite(spriteID);
+
+	if (thisSprite.getGlobalBounds().contains(sprite.getPosition()) && mouse.isButtonPressed(sf::Mouse::Left) && !m_clicked)
 	{
 		m_clicked = true;
 	}
@@ -42,8 +47,9 @@ bool Button::IsClicked(const sf::Sprite& sprite)
 bool Button::IsClicked(const sf::Vector2i& mousePosition)
 {
 	const sf::Mouse mouse;
+	const sf::Sprite thisSprite = TextureManager::GetInstance()->GetSprite(m_spriteID);
 
-	if (m_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition)) && mouse.isButtonPressed(sf::Mouse::Left) && !m_clicked)
+	if (thisSprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition)) && mouse.isButtonPressed(sf::Mouse::Left) && !m_clicked)
 	{
 		m_clicked = true;
 	}
@@ -56,15 +62,12 @@ bool Button::IsClicked(const sf::Vector2i& mousePosition)
 	return m_clicked;
 }
 
-void Button::MovePosition(const sf::Vector2f& newPosition)
+void Button::SetFont(const std::string& fontID, const std::string fontFileName)
 {
-	m_sprite.setPosition(newPosition);
-}
-
-void Button::SetFont(const std::string fontFileName)
-{
-	m_font.loadFromFile(fontFileName);
-	m_text.setFont(m_font);
+	TextureManager::GetInstance()->LoadFont(fontID, fontFileName);
+	sf::Font font = TextureManager::GetInstance()->GetFont(fontID);
+	m_text.setFont(font);
+	m_fontID = fontID;
 }
 
 void Button::SetText(const std::string newText)
@@ -72,25 +75,15 @@ void Button::SetText(const std::string newText)
 	m_text.setString(newText);
 }
 
-void Button::SetTexture(sf::Texture& texture)
+void Button::SetPositionFromSprite(const int position)
 {
-	m_sprite.setTexture(texture);
-}
-
-void Button::SetScale(float scaleBy)
-{
-	m_sprite.setScale(m_sprite.getScale() / scaleBy);
-}
-
-const sf::Sprite& Button::getSprite() const
-{
-	return m_sprite;
+	m_positionFromSprite = position;
 }
 
 //Draws all things that needs to be draw with the buton class
-void Button::Draw(sf::RenderWindow& target)
+void Button::Draw(int x, int y)
 {
-	target.draw(m_sprite);
-	target.draw(m_text);
+	TextureManager::GetInstance()->Draw(m_spriteID, x, y);
+	TextureManager::GetInstance()->DrawText(m_text, x + m_positionFromSprite, y);
 }
 

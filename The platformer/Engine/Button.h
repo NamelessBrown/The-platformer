@@ -9,24 +9,22 @@ public:
 	Button() = default;
 	Button(const Button&) = delete;
 	Button operator=(const Button&) = delete;
-	Button(const sf::Vector2f& position, const sf::Font& font, const sf::Texture& texture, const int textposition);
+	Button(const std::string& spriteID, const std::string& filename);
+	Button(const std::string& fontID, const std::string& filename, const unsigned fontSize);
 	virtual ~Button();
 public:
-	bool IsClicked(const sf::Sprite& sprite);
+	bool IsClicked(const std::string& spriteID);
 	bool IsClicked(const sf::Vector2i& mousePosition);
-	void MovePosition(const sf::Vector2f& newPosition);
-	void SetFont(const std::string fontFileName);
+	void SetFont(const std::string& fontID, const std::string fontFileName);
 	void SetText(const std::string newText);
-	void SetTexture(sf::Texture& texture);
-	void SetScale(float scaleBy);
-	const sf::Sprite& getSprite() const;
-	void Draw(sf::RenderWindow& target);
+	void SetPositionFromSprite(const int position);
+	void Draw(int x, int y);
 private:
-	sf::Texture m_texture;
-	sf::Sprite m_sprite;
+	std::string m_spriteID; //*this stores the current id of the current object
 	sf::Text m_text;
-	sf::Font m_font;
+	std::string m_fontID; //*this stores the current id of the current object
 
+	int m_positionFromSprite;
 	bool m_clicked = false;
 };
 
