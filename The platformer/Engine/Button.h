@@ -7,8 +7,8 @@ class Button
 {
 public:
 	Button() = default;
-	Button(const Button&) = delete;
-	Button operator=(const Button&) = delete;
+	Button(const Button&);
+	Button& operator=(const Button&);
 	Button(const std::string& spriteID, const std::string& filename);
 	Button(const std::string& fontID, const std::string& filename, const unsigned fontSize);
 	virtual ~Button();
@@ -17,14 +17,16 @@ public:
 	bool IsClicked(const sf::Vector2i& mousePosition);
 	void SetFont(const std::string& fontID, const std::string fontFileName);
 	void SetText(const std::string newText);
+	void SetFontSize(const unsigned size);
 	void SetPositionFromSprite(const int position);
 	void Draw(int x, int y);
 private:
 	std::string m_spriteID; //*this stores the current id of the current object
-	sf::Text m_text;
 	std::string m_fontID; //*this stores the current id of the current object
+	std::string m_text;
 
-	int m_positionFromSprite;
+	int m_positionFromSprite = 0;
+	unsigned m_fontSize = 30;
 	bool m_clicked = false;
 };
 

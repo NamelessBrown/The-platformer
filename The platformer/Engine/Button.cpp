@@ -4,8 +4,6 @@
 Button::Button(const std::string& spriteID, const std::string& filename)
 {
 	TextureManager::GetInstance()->LoadTexture(spriteID, filename);
-	m_text.setString("Defualt");
-	m_text.setCharacterSize(20);
 	m_spriteID = spriteID;
 	m_positionFromSprite = 0;
 }
@@ -13,10 +11,23 @@ Button::Button(const std::string& spriteID, const std::string& filename)
 Button::Button(const std::string& fontID, const std::string& filename, const unsigned fontSize)
 {
 	TextureManager::GetInstance()->LoadFont(fontID, filename);
-	m_text.setString("Defualt");
-	m_text.setCharacterSize(fontSize);
 	m_fontID = fontID;
 	m_positionFromSprite = 0;
+}
+
+Button::Button(const Button& b)
+{
+	m_spriteID = b.m_spriteID;
+	m_positionFromSprite = b.m_positionFromSprite;
+	m_fontID = b.m_fontID;
+}
+
+Button& Button::operator=(const Button& b)
+{
+	m_spriteID = b.m_spriteID;
+	m_positionFromSprite = b.m_positionFromSprite;
+	m_fontID = b.m_fontID;
+	return *this;
 }
 
 Button::~Button()
@@ -66,13 +77,17 @@ void Button::SetFont(const std::string& fontID, const std::string fontFileName)
 {
 	TextureManager::GetInstance()->LoadFont(fontID, fontFileName);
 	sf::Font font = TextureManager::GetInstance()->GetFont(fontID);
-	m_text.setFont(font);
 	m_fontID = fontID;
 }
 
 void Button::SetText(const std::string newText)
 {
-	m_text.setString(newText);
+	m_text = newText;
+}
+
+void Button::SetFontSize(const unsigned size)
+{
+	m_fontSize = size;
 }
 
 void Button::SetPositionFromSprite(const int position)
@@ -84,6 +99,6 @@ void Button::SetPositionFromSprite(const int position)
 void Button::Draw(int x, int y)
 {
 	TextureManager::GetInstance()->Draw(m_spriteID, x, y);
-	TextureManager::GetInstance()->DrawText(m_text, x + m_positionFromSprite, y);
+	TextureManager::GetInstance()->DrawText(m_fontID, m_text, m_fontSize, x, y);
 }
 
