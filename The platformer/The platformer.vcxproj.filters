@@ -85,6 +85,9 @@
     <ClCompile Include="Engine\Music.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation.h">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Music.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
