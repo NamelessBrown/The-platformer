@@ -50,16 +50,16 @@ bool CollisionHandler::MapCollision(const sf::IntRect& box)
     const unsigned tileRows = m_collisionLayer->GetNumberOfRows();
     const unsigned tileColumns = m_collisionLayer->GetNumberOfColumns();
 
-    int left_tile = box.left / static_cast<int>(tileSize);
-    int right_tile = (box.left + box.width) / static_cast<int>(tileSize);
-    int top_tile = box.top / static_cast<int>(tileSize);
-    int bottom_tile = (box.top + box.height) / static_cast<int>(tileSize);
+    unsigned left_tile = (unsigned)box.left / tileSize;
+    unsigned right_tile = ((unsigned)box.left + (unsigned)box.width) / tileSize;
+    unsigned top_tile = (unsigned)box.top / tileSize;
+    unsigned bottom_tile = ((unsigned)box.top + (unsigned)box.height) / tileSize;
 
     if (left_tile < 0)
     {
         left_tile = 0;
     }
-    if (right_tile > static_cast<int>(tileColumns))
+    if (right_tile > tileColumns)
     {
         right_tile = tileColumns;
     }
@@ -67,7 +67,7 @@ bool CollisionHandler::MapCollision(const sf::IntRect& box)
     {
         top_tile = 0;
     }
-    if (bottom_tile > static_cast<int>(tileRows))
+    if (bottom_tile > tileRows)
     {
         bottom_tile = tileRows;
     }
