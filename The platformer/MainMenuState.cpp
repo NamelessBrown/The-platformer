@@ -6,7 +6,6 @@
 
 MainMenuState::MainMenuState()
 {
-	Sound::GetInstance()->LoadSoundBuffer("brick", "Sounds/brick.wav");
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
@@ -23,14 +22,14 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::HandleInput()
 {
+	if (m_quitButton.IsClicked(sf::Mouse::getPosition(Engine::GetInstance()->GetWindow())))
+	{
+		Engine::GetInstance()->GetWindow().close();
+	}
 }
 
 void MainMenuState::Update(const float dt)
 {
-	if (m_playButton.IsClicked(sf::Mouse::getPosition(Engine::GetInstance()->GetWindow())))
-	{
-		Sound::GetInstance()->Play("brick");
-	}
 }
 
 void MainMenuState::Render()
