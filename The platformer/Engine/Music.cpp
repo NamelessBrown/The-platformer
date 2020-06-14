@@ -55,3 +55,8 @@ void Music::RemoveSound(const std::string& musicID)
 
 	m_music.erase(musicID);
 }
+
+sf::Music& Music::GetMusic(const std::string& musicID)
+{
+	return m_music[musicID];
+}

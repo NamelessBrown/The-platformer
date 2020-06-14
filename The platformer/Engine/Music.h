@@ -15,6 +15,7 @@ public:
 	void Play(const std::string& musicID);
 	void Stop(const std::string& musicID);
 	void RemoveSound(const std::string& musicID);
+	sf::Music& GetMusic(const std::string& musicID);
 private:
 	Music();
 	static Music* s_instance;
