@@ -7,8 +7,8 @@
 
 MainMenuState::MainMenuState()
 {
-	Music::GetInstance()->LoadMusic("Don't", "Sounds/Don't Stop Believin'.ogg");
-	Music::GetInstance()->Play("Don't");
+	Music::GetInstance()->LoadMusic("dont", "Sounds/Don't Stop Believin'.ogg");
+	Music::GetInstance()->Play("dont");
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
@@ -21,8 +21,6 @@ MainMenuState::MainMenuState()
 
 MainMenuState::~MainMenuState()
 {
-	Music::GetInstance()->Stop("Don't");
-	Music::GetInstance()->RemoveSound("Don't");
 }
 
 void MainMenuState::HandleInput()
@@ -35,6 +33,7 @@ void MainMenuState::HandleInput()
 	if (m_playButton.IsClicked(sf::Mouse::getPosition(Engine::GetInstance()->GetWindow())))
 	{
 		GameStateManager::GetInstance()->ChangeState(new PlayState());
+		Music::GetInstance()->RemoveSound("dont");
 	}
 
 }
