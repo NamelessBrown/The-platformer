@@ -9,6 +9,8 @@ MainMenuState::MainMenuState()
 {
 	Music::GetInstance()->LoadMusic("dont", "Sounds/Don't Stop Believin'.ogg");
 	Music::GetInstance()->Play("dont");
+	Music::GetInstance()->GetMusic("dont").setLoop(true);
+
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
