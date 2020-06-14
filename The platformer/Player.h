@@ -15,6 +15,7 @@ public:
 private:
 	void Movement(const float dt);
 private:
+	bool m_jumping = false;
 	Animation m_animation;
 	RigidBody m_body;
 	sf::Vector2f m_lastSafePosition;

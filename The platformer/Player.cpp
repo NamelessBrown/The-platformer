@@ -40,9 +40,10 @@ void Player::Movement(const float dt)
 		m_body.ApplyForceX(2.f);
 		m_animation.SetProperties(m_properties.m_textureId, 3, 8, 100, Flip::right);
 	}
-	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space))
+	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space) && !m_jumping)
 	{
-		m_body.ApplyForceY(-5.f);
+		m_body.ApplyForceY(-10.f);
+		m_jumping = true;
 	}
 
 	m_body.Update(dt);
@@ -66,6 +67,7 @@ void Player::Movement(const float dt)
 	if (CollisionHandler::GetInstance()->MapCollision(m_collider.GetColliderBox()))
 	{
 		m_position.y = m_lastSafePosition.y;
+		m_jumping = false;
 	}
 
 	m_origin.x = m_position.x + m_properties.m_width / 2.f;
