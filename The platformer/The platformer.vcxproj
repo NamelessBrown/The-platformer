@@ -168,6 +168,7 @@
     <ClCompile Include="Engine\InputHandler.cpp" />
     <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Engine\MapParser.cpp" />
+    <ClCompile Include="Engine\Music.cpp" />
     <ClCompile Include="Engine\Point.cpp" />
     <ClCompile Include="Engine\Sound.cpp" />
     <ClCompile Include="Engine\TextureManager.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Engine\Layer.h" />
     <ClInclude Include="Engine\Map.h" />
     <ClInclude Include="Engine\MapParser.h" />
+    <ClInclude Include="Engine\Music.h" />
     <ClInclude Include="Engine\Point.h" />
     <ClInclude Include="Engine\RigidBody.h" />
     <ClInclude Include="Engine\Sound.h" />

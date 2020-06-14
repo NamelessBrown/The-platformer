@@ -1,11 +1,13 @@
 #include "MainMenuState.h"
 #include "Engine/TextureManager.h"
 #include "Engine/Engine.h"
-#include "Engine/Sound.h"
+#include "Engine/Music.h"
 #include <iostream>
 
 MainMenuState::MainMenuState()
 {
+	Music::GetInstance()->LoadMusic("Ice", "Sounds/IceFlow.ogg");
+	Music::GetInstance()->Play("Ice");
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
