@@ -15,8 +15,6 @@ CollisionHandler* CollisionHandler::GetInstance()
 
 CollisionHandler::CollisionHandler()
 {
-    m_collisionLayer = (TileLayer*)m_map;
-    m_tileMap = m_collisionLayer->GetTileMap();
 }
 
 CollisionHandler::~CollisionHandler()
@@ -27,7 +25,15 @@ CollisionHandler::~CollisionHandler()
 bool CollisionHandler::Init(Map* map)
 {
     m_map = map;
-    return false;
+    m_collisionLayer = (TileLayer*)m_map;
+    m_tileMap = m_collisionLayer->GetTileMap();
+
+    if (m_map == nullptr)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool CollisionHandler::CheckCollision(const sf::IntRect& box, const sf::IntRect& box2)
