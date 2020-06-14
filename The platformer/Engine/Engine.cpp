@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "Sound.h"
+#include "Music.h"
 #include "GameStateManager.h"
 #include "../MainMenuState.h"
 
