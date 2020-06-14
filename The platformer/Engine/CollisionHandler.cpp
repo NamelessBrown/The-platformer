@@ -25,7 +25,7 @@ CollisionHandler::~CollisionHandler()
 bool CollisionHandler::Init(Map* map)
 {
     m_map = map;
-    m_collisionLayer = (TileLayer*)m_map;
+    m_collisionLayer = (TileLayer*)m_map->GetLayers().front();
     m_tileMap = m_collisionLayer->GetTileMap();
 
     if (m_map == nullptr)

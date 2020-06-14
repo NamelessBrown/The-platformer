@@ -5,6 +5,10 @@
 #include "TileLayer.h"
 #include "Map.h" 
 
+/*
+	WARNING: MAKE SURE YOU USE THE INIT FUNCTION BEFORE ANYTHING ELSE!
+*/
+
 class CollisionHandler
 {
 public:
@@ -22,6 +26,6 @@ private:
 	static CollisionHandler* s_instance;
 	Map* m_map = nullptr;
 	TileMap m_tileMap;
-	TileLayer* m_collisionLayer;
+	TileLayer* m_collisionLayer = nullptr;
 };
 
