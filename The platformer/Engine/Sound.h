@@ -14,7 +14,7 @@ public:
 	~Sound();
 	void Quit();
 public:
-	bool LoadSoundBuffer(const std::string& path);
+	bool LoadSoundBuffer(const std::string& soundID, const std::string& filename);
 	void Play(const std::string& soundID);
 	void Stop(const std::string& soundID);
 	void RemoveSound(const std::string& soundID);

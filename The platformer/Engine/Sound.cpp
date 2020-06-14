@@ -26,20 +26,22 @@ void Sound::Quit()
 	delete s_instance;
 }
 
-bool Sound::LoadSoundBuffer(const std::string& path)
+bool Sound::LoadSoundBuffer(const std::string& soundID, const std::string& filename)
 {
-	if (!m_soundsbuffers[path].loadFromFile(path))
+	m_soundsbuffers[soundID] = sf::SoundBuffer();
+	m_sounds[soundID] = sf::Sound();
+
+	if (!m_soundsbuffers[soundID].loadFromFile(filename))
 	{
 		return false;
 	}
-
-	m_sounds[path].setBuffer(m_soundsbuffers[path]);
 
 	return true;
 }
 
 void Sound::Play(const std::string& soundID)
 {
+	m_sounds[soundID].setBuffer(m_soundsbuffers[soundID]);
 	m_sounds[soundID].play();
 }
 
