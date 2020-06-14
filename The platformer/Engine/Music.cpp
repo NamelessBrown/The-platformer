@@ -48,5 +48,10 @@ void Music::Stop(const std::string& musicID)
 
 void Music::RemoveSound(const std::string& musicID)
 {
+	if (m_music[musicID].getStatus() == sf::Music::Status::Playing)
+	{
+		m_music[musicID].stop();
+	}
+
 	m_music.erase(musicID);
 }
