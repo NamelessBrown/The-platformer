@@ -169,6 +169,7 @@
     <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Engine\MapParser.cpp" />
     <ClCompile Include="Engine\Point.cpp" />
+    <ClCompile Include="Engine\Sound.cpp" />
     <ClCompile Include="Engine\TextureManager.cpp" />
     <ClCompile Include="Engine\TileLayer.cpp" />
     <ClCompile Include="Engine\Timer.cpp" />
@@ -178,7 +179,6 @@
     <ClCompile Include="Engine\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation.h" />
@@ -196,13 +196,13 @@
     <ClInclude Include="Engine\MapParser.h" />
     <ClInclude Include="Engine\Point.h" />
     <ClInclude Include="Engine\RigidBody.h" />
+    <ClInclude Include="Engine\Sound.h" />
     <ClInclude Include="Engine\TextureManager.h" />
     <ClInclude Include="Engine\TileLayer.h" />
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Engine\tinystr.h" />
     <ClInclude Include="Engine\tinyxml.h" />
     <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

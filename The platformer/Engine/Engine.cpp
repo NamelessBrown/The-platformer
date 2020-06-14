@@ -4,6 +4,7 @@
 #include "MapParser.h"
 #include "Camera.h"
 #include "Timer.h"
+#include "Sound.h"
 #include "GameStateManager.h"
 #include "../MainMenuState.h"
 
@@ -89,6 +90,7 @@ void Engine::Render()
 
 void Engine::Quit()
 {
+	Sound::GetInstance()->Quit();
 	GameStateManager::GetInstance()->Quit();
 	Timer::GetInstance()->Quit();
 	MapParser::GetInstance()->Quit();

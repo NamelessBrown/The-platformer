@@ -79,7 +79,7 @@
     <ClCompile Include="Engine\Button.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
+    <ClCompile Include="Engine\Sound.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,7 +147,7 @@
     <ClInclude Include="Engine\Button.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
+    <ClInclude Include="Engine\Sound.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
