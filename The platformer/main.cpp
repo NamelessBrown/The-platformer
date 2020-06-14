@@ -5,7 +5,7 @@
 
 int main()
 {
-    Engine::GetInstance()->Init(1280, 720, "The Game", false);
+    Engine::GetInstance()->Init(1280, 720, "The Platformer", true);
     Engine::GetInstance()->Run();
     Engine::GetInstance()->Quit();
 }
