@@ -28,6 +28,7 @@ public:
 	/* Quits out The TextureManagr instance calling its destructor */
 	void Quit();
 	const sf::Sprite& GetSprite(const std::string& id) const;
+	sf::Sprite& GetSprite(const std::string& id);
 	const sf::Font& GetFont(const std::string& id) const;
 private:
 	TextureManager();

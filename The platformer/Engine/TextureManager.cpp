@@ -29,6 +29,11 @@ const sf::Sprite& TextureManager::GetSprite(const std::string& id) const
     return m_spriteMap.at(id);
 }
 
+sf::Sprite& TextureManager::GetSprite(const std::string& id)
+{
+    return m_spriteMap[id];
+}
+
 const sf::Font& TextureManager::GetFont(const std::string& id) const
 {
     return m_fontMap.at(id);
