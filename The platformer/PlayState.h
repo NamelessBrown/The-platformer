@@ -2,6 +2,7 @@
 
 #include "Engine/GameState.h"
 #include "Engine/Map.h"
+#include "Player.h"
 
 class PlayState : public GameState
 {
@@ -14,5 +15,6 @@ public:
 	virtual void Render();
 private:
 	Map* m_gameMap = nullptr;
+	Player* m_player = nullptr;
 };
 
