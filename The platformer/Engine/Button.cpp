@@ -73,6 +73,11 @@ bool Button::IsClicked(const sf::Vector2i& mousePosition)
 	return m_clicked;
 }
 
+void Button::ScaleSprite(const float scaleBy)
+{
+	TextureManager::GetInstance()->GetSprite(m_spriteID).setScale(TextureManager::GetInstance()->GetSprite(m_spriteID).getScale() / scaleBy);
+}
+
 void Button::SetFont(const std::string& fontID, const std::string fontFileName)
 {
 	TextureManager::GetInstance()->LoadFont(fontID, fontFileName);

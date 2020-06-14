@@ -15,6 +15,7 @@ public:
 public:
 	bool IsClicked(const std::string& spriteID);
 	bool IsClicked(const sf::Vector2i& mousePosition);
+	void ScaleSprite(const float scaleBy);
 	void SetFont(const std::string& fontID, const std::string fontFileName);
 	void SetText(const std::string newText);
 	void SetFontSize(const unsigned size);
