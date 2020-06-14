@@ -13,6 +13,7 @@ public:
 	virtual void Update(const float dt);
 	virtual void Render();
 private:
-	Button test;
+	Button m_playButton;
+	Button m_quitButton;
 };
 
