@@ -2,7 +2,8 @@
 #include "Engine/TextureManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Music.h"
-#include <iostream>
+#include "Engine/GameStateManager.h"
+#include "PlayState.h"
 
 MainMenuState::MainMenuState()
 {
@@ -20,6 +21,8 @@ MainMenuState::MainMenuState()
 
 MainMenuState::~MainMenuState()
 {
+	Music::GetInstance()->Stop("Don't");
+	Music::GetInstance()->RemoveSound("Don't");
 }
 
 void MainMenuState::HandleInput()
@@ -28,6 +31,12 @@ void MainMenuState::HandleInput()
 	{
 		Engine::GetInstance()->GetWindow().close();
 	}
+
+	if (m_playButton.IsClicked(sf::Mouse::getPosition(Engine::GetInstance()->GetWindow())))
+	{
+		GameStateManager::GetInstance()->ChangeState(new PlayState());
+	}
+
 }
 
 void MainMenuState::Update(const float dt)
