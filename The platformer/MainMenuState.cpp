@@ -6,8 +6,8 @@
 
 MainMenuState::MainMenuState()
 {
-	Music::GetInstance()->LoadMusic("Ice", "Sounds/IceFlow.ogg");
-	Music::GetInstance()->Play("Ice");
+	Music::GetInstance()->LoadMusic("Don't", "Sounds/Don't Stop Believin'.ogg");
+	Music::GetInstance()->Play("Don't");
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
