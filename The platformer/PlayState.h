@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/GameState.h"
+#include "Engine/Map.h"
 
 class PlayState : public GameState
 {
@@ -12,6 +13,6 @@ public:
 	virtual void Update(const float dt);
 	virtual void Render();
 private:
-
+	Map* m_gameMap = nullptr;
 };
 
