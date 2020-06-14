@@ -90,6 +90,7 @@ void Engine::Render()
 
 void Engine::Quit()
 {
+	Music::GetInstance()->Quit();
 	Sound::GetInstance()->Quit();
 	GameStateManager::GetInstance()->Quit();
 	Timer::GetInstance()->Quit();
