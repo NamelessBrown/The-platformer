@@ -23,7 +23,8 @@ PlayState::PlayState()
 	MapParser::GetInstance()->Load(m_level, m_levelPath);
 	m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
 	CollisionHandler::GetInstance()->Init(*m_maps[0]);
-
+	TextureManager::GetInstance()->LoadTexture("background2", "Textures/background2.jpg");
+	TextureManager::GetInstance()->LoadTexture("background3", "Textures/background3.png");
 	TextureManager::GetInstance()->LoadTexture("player", "Textures/player.png");
 	TextureManager::GetInstance()->LoadTexture("bomb", "Textures/sheet1.png");
 	TextureManager::GetInstance()->LoadTexture("dead", "Textures/dead.jpg");
@@ -72,7 +73,7 @@ void PlayState::Update(const float dt)
 		delete m_goal;
 		delete m_player;
 
-		m_player = new Player(GameObjectProperties("player", { 32, 0 }, 46, 50));
+		m_player = new Player(GameObjectProperties("player", { 64, 0 }, 46, 50));
 
 		std::mt19937 rng(std::random_device{}());
 		std::uniform_int_distribution<int> distributionXPosition(250, 500);
@@ -92,7 +93,18 @@ void PlayState::Update(const float dt)
 
 void PlayState::Render()
 {
-	TextureManager::GetInstance()->Draw("mainMenuBackground", 0, 0);
+	if (m_level == "level1" || m_level == "level2")
+	{
+		TextureManager::GetInstance()->Draw("mainMenuBackground", 0, 0);
+	}
+	else if (m_level == "level3" || m_level == "leve4")
+	{
+		TextureManager::GetInstance()->Draw("mainMenuBackground", -100, 0);
+	}
+	else
+	{
+		TextureManager::GetInstance()->Draw("mainMenuBackground", -500, 0);
+	}
 
 	m_maps[0]->Render();
 	m_player->Render();
@@ -106,9 +118,18 @@ void PlayState::Render()
 
 void PlayState::LoadNewLevel()
 {
+	if (m_currentLevel >= 5)
+	{
+		m_currentLevel = 0;
+		m_level = "level1";
+		m_levelPath = "Levels/level1.tmx";
+		return;
+	}
+
 	int newLevel = m_currentLevel + 1;
 	std::string nextLevel = std::to_string(newLevel);
 	std::string lastLevel = std::to_string(m_currentLevel);
+
 	int index = 0;
 	while (index > -1)
 	{
@@ -133,11 +154,6 @@ void PlayState::LoadNewLevel()
 	}
 
 	m_currentLevel++;
-
-	if (m_currentLevel > 5)
-	{
-		m_currentLevel = 1;
-	}
 
 }
 

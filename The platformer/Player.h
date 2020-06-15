@@ -18,7 +18,6 @@ private:
 	void Movement(const float dt);
 private:
 	int m_health = 100;
-	bool m_jumping = false;
 	Animation m_animation;
 	RigidBody m_body;
 	sf::Vector2i m_lastSafePosition;

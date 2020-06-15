@@ -26,7 +26,7 @@ void Bombs::Update(const float dt)
 	{
 		std::mt19937 rng(std::random_device{}());
 		std::uniform_int_distribution<int> locationDistributionX(32, 1000);
-		std::uniform_int_distribution<int> locationDistributionY(0, 100);
+		std::uniform_int_distribution<int> locationDistributionY(50, 100);
 		m_position = sf::Vector2i(locationDistributionX(rng), locationDistributionY(rng));
 	}
 }

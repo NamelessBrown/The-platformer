@@ -53,10 +53,9 @@ void Player::Movement(const float dt)
 		m_body.ApplyForceX(2);
 		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, m_flip);
 	}
-	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space) && !m_jumping)
+	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space))
 	{
-		m_body.ApplyForceY(-20);
-		m_jumping = true;
+		m_body.ApplyForceY(-10);
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::RShift))
 	{
@@ -74,7 +73,6 @@ void Player::Movement(const float dt)
 	if (CollisionHandler::GetInstance()->MapCollision(m_collider.GetColliderBox()))
 	{
 		m_position.y = m_lastSafePosition.y;
-		m_jumping = false;
 	}
 
 	//x position
