@@ -3,7 +3,7 @@
 #include "Engine/InputHandler.h"
 
 Player::Player(const GameObjectProperties& properties)
-	:GameObject(properties)
+	:GameObject(properties), m_flip(Flip::none)
 {
 	m_animation.SetProperties(properties.m_textureId, 0, 1, 0);
 	m_collider.SetColliderBox(sf::IntRect(static_cast<int>(m_position.x), static_cast<int>(m_position.y), properties.m_width, properties.m_height));
@@ -22,7 +22,7 @@ void Player::Update(const float dt)
 
 void Player::Render()
 {
-	m_animation.Draw(static_cast<int>(m_position.x), static_cast<int>(m_position.y), m_properties.m_width, m_properties.m_height);
+	m_animation.Draw(m_position.x, m_position.y, m_properties.m_width, m_properties.m_height);
 }
 
 void Player::Movement(const float dt)

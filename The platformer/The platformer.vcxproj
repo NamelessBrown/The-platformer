@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bombs.cpp" />
     <ClCompile Include="Engine\Animation.cpp" />
     <ClCompile Include="Engine\Button.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="PlayState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bombs.h" />
     <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Button.h" />
     <ClInclude Include="Engine\Camera.h" />

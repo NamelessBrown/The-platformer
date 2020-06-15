@@ -50,6 +50,11 @@ public:
 		return m_origin;
 	}
 
+	const Collider& GetCollider() const
+	{
+		return m_collider;
+	}
+
 	virtual void Render() = 0;
 	virtual void Update(float dt) = 0;
 protected:
