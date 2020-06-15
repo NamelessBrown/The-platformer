@@ -16,7 +16,7 @@ public:
 	virtual void Update(const float dt);
 	virtual void Render();
 private:
-	void SpawnBombs(const unsigned amount);
+	void SpawnBombs(const unsigned amount, int startingPosition = 250);
 private:
 	int m_currentMap = 0;
 	std::vector<Map*> m_maps;

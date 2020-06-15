@@ -22,9 +22,9 @@ PlayState::PlayState()
 	TextureManager::GetInstance()->LoadTexture("player", "Textures/player.png");
 	TextureManager::GetInstance()->LoadTexture("bomb", "Textures/sheet1.png");
 	TextureManager::GetInstance()->LoadTexture("dead", "Textures/dead.jpg");
+	SpawnBombs(50);
 	m_player = new Player(GameObjectProperties("player", {32, 0}, 46, 50));
-	SpawnBombs(100);
-	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() / 4.f);
+	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() / 2.f);
 
 	Camera::GetInstance()->SetTarget(m_player->GetOrigin());
 }
@@ -50,13 +50,14 @@ void PlayState::Update(const float dt)
 	Camera::GetInstance()->Update(dt);
 	m_player->Update(dt);
 
-	for (auto& e : m_bombs)
+	for (unsigned i = 0; i < m_bombs.size(); i++)
 	{
-		e->Update(dt);
+		m_bombs[i]->Update(dt);
 
-		if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), e->GetCollider().GetColliderBox()))
+		if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), m_bombs[i]->GetCollider().GetColliderBox()))
 		{
-			e->Boom();
+			m_bombs[i]->Boom();
+			m_player->SetHealth(m_bombs[i]->GetDamage());
 		}
 
 	}
@@ -71,22 +72,24 @@ void PlayState::Render()
 	m_maps[m_currentMap]->Render();
 	m_player->Render();
 
-	for (auto& e : m_bombs)
+	for (unsigned i = 0; i < m_bombs.size(); i++)
 	{
-		e->Render();
+		if (m_bombs[i]->IsAlive())
+		{
+			m_bombs[i]->Render();
+		}
 	}
 }
 
-void PlayState::SpawnBombs(const unsigned amount)
+void PlayState::SpawnBombs(const unsigned amount, int startingPosition)
 {
 	for (auto& e : m_bombs)
 	{
 		delete e;
 	}
 
-
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> distributionXPosition(32, 60 * 32);
+	std::uniform_int_distribution<int> distributionXPosition(startingPosition, 60 * 32);
 
 	for (unsigned i = 0; i < amount; i++)
 	{
