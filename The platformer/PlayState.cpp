@@ -31,9 +31,9 @@ PlayState::PlayState()
 	SpawnBombs(10);
 	m_player = new Player(GameObjectProperties("player", {32, 0}, 46, 50));
 	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() / 2.f);
-	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() / 6.f);
+	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() / 4.f);
 
-	m_goal = new Goal(GameObjectProperties("DDD", { 250, 450 }, 405, 214));
+	m_goal = new Goal(GameObjectProperties("DDD", { 250, 360 }, 405, 214));
 
 	Camera::GetInstance()->SetTarget(m_player->GetOrigin());
 }
@@ -62,6 +62,12 @@ void PlayState::Update(const float dt)
 
 	BombCollision(dt);
 
+	if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), m_goal->GetCollider().GetColliderBox()))
+	{
+		//load new level;
+		std::cout << "new level! \n";
+	}
+
 	if (m_player->GetHealth() < 0)
 	{
 		GameStateManager::GetInstance()->ChangeState(new GameOverState());
@@ -82,6 +88,10 @@ void PlayState::Render()
 	{
 		e->Render();
 	}
+}
+
+void PlayState::LoadNewLevel()
+{
 }
 
 void PlayState::BombCollision(const float dt)

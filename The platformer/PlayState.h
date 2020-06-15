@@ -17,6 +17,7 @@ public:
 	virtual void Update(const float dt);
 	virtual void Render();
 private:
+	void LoadNewLevel();
 	void BombCollision(const float dt);
 	void SpawnBombs(const unsigned amount, int startingPosition = 250);
 private:
