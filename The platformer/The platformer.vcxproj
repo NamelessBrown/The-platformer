@@ -180,6 +180,7 @@
     <ClCompile Include="Engine\tinyxmlerror.cpp" />
     <ClCompile Include="Engine\tinyxmlparser.cpp" />
     <ClCompile Include="GameOverState.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Engine\tinystr.h" />
     <ClInclude Include="Engine\tinyxml.h" />
     <ClInclude Include="GameOverState.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
