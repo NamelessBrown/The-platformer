@@ -14,9 +14,6 @@ MainMenuState::MainMenuState()
 	TextureManager::GetInstance()->LoadTexture("mainMenuBackground", "Textures/background.jpg");
 	m_playButton = Button("start", "Textures/start.png");
 	m_quitButton = Button("quit", "Textures/quit.png");
-
-	m_playButton.SetFont("font", "Font/Nervous.ttf");
-	m_quitButton.SetFont("font", "Font/Nervous.ttf");
 	m_playButton.ScaleSprite(6.f);
 	m_quitButton.ScaleSprite(2.f);
 }
