@@ -32,18 +32,24 @@ void Player::Movement(const float dt)
 
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::A))
 	{
+		m_flip = Flip::left;
 		m_body.ApplyForceX(-2);
-		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, Flip::left);
+		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, m_flip);
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::D))
 	{
+		m_flip = Flip::right;
 		m_body.ApplyForceX(2);
-		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, Flip::right);
+		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, m_flip);
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space) && !m_jumping)
 	{
 		m_body.ApplyForceY(-10);
 		m_jumping = true;
+	}
+	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::RShift))
+	{
+		m_animation.SetProperties(m_properties.m_textureId, 1, 6, 100, m_flip);
 	}
 
 	m_body.Update(dt);

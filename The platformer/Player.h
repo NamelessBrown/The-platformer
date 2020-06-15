@@ -19,5 +19,6 @@ private:
 	Animation m_animation;
 	RigidBody m_body;
 	sf::Vector2i m_lastSafePosition;
+	Flip m_flip;
 };
 
