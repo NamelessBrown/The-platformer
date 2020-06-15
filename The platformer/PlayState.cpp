@@ -21,8 +21,8 @@ PlayState::PlayState()
 
 	TextureManager::GetInstance()->LoadFont("font", "Font/times.ttf");
 	MapParser::GetInstance()->Load(m_level, m_levelPath);
-	m_maps[m_currentMap] = MapParser::GetInstance()->GetMap("level1");
-	CollisionHandler::GetInstance()->Init(m_maps[m_currentMap]);
+	m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
+	CollisionHandler::GetInstance()->Init(*m_maps[0]);
 
 	TextureManager::GetInstance()->LoadTexture("player", "Textures/player.png");
 	TextureManager::GetInstance()->LoadTexture("bomb", "Textures/sheet1.png");
@@ -64,8 +64,22 @@ void PlayState::Update(const float dt)
 
 	if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), m_goal->GetCollider().GetColliderBox()))
 	{
-		//load new level;
-		std::cout << "new level! \n";
+		m_maps.emplace_back(new Map());
+		LoadNewLevel();
+		MapParser::GetInstance()->Load(m_level, m_levelPath);
+		m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
+
+		delete m_goal;
+		delete m_player;
+
+		m_player = new Player(GameObjectProperties("player", { 32, 0 }, 46, 50));
+
+		std::mt19937 rng(std::random_device{}());
+		std::uniform_int_distribution<int> distributionXPosition(250, 500);
+		std::uniform_int_distribution<int> distributionYPosition(0, 250);
+		m_goal = new Goal(GameObjectProperties("DDD", { distributionXPosition(rng) , distributionYPosition(rng) }, 405, 214));
+
+		CollisionHandler::GetInstance()->Init(*m_maps[0]);
 	}
 
 	if (m_player->GetHealth() < 0)
@@ -80,7 +94,7 @@ void PlayState::Render()
 {
 	TextureManager::GetInstance()->Draw("mainMenuBackground", 0, 0);
 
-	m_maps[m_currentMap]->Render();
+	m_maps[0]->Render();
 	m_player->Render();
 	m_goal->Render();
 
@@ -92,6 +106,39 @@ void PlayState::Render()
 
 void PlayState::LoadNewLevel()
 {
+	int newLevel = m_currentLevel + 1;
+	std::string nextLevel = std::to_string(newLevel);
+	std::string lastLevel = std::to_string(m_currentLevel);
+	int index = 0;
+	while (index > -1)
+	{
+		index = m_level.find(lastLevel, index);
+		if (index > -1)
+		{
+			m_level.replace(index, nextLevel.length(), nextLevel);
+		}
+
+	}
+
+	index = 0;
+	while (index > -1)
+	{
+		index = m_levelPath.find(lastLevel);
+		if (index > -1)
+		{
+			m_levelPath.replace(index, nextLevel.length(), nextLevel);
+			break;
+		}
+
+	}
+
+	m_currentLevel++;
+
+	if (m_currentLevel > 5)
+	{
+		m_currentLevel = 1;
+	}
+
 }
 
 void PlayState::BombCollision(const float dt)

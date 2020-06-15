@@ -23,7 +23,7 @@ private:
 private:
 	std::string m_level;
 	std::string m_levelPath;
-	int m_currentMap = 0;
+	int m_currentLevel = 1;
 	std::vector<Map*> m_maps;
 	std::vector<Bombs*> m_bombs;
 	Player* m_player = nullptr;
