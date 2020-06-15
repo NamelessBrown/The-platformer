@@ -55,7 +55,7 @@ void Player::Movement(const float dt)
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space) && !m_jumping)
 	{
-		m_body.ApplyForceY(-10);
+		m_body.ApplyForceY(-20);
 		m_jumping = true;
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::RShift))
