@@ -5,6 +5,8 @@
 #include "Engine/Camera.h"
 #include "Engine/InputHandler.h"
 #include "Engine/Music.h"
+#include "Engine/GameStateManager.h"
+#include "GameOverState.h"
 #include <random>
 
 PlayState::PlayState()
@@ -62,13 +64,18 @@ void PlayState::Update(const float dt)
 
 	}
 
+	if (m_player->GetHealth() < 0)
+	{
+		GameStateManager::GetInstance()->ChangeState(new GameOverState());
+		Music::GetInstance()->RemoveSound("fath");
+	}
 
 }
 
 void PlayState::Render()
 {
 	TextureManager::GetInstance()->Draw("mainMenuBackground", 0, 0);
-	TextureManager::GetInstance()->DrawText("font", "Press C to go to the next level!", 50, 50, 50);
+
 	m_maps[m_currentMap]->Render();
 	m_player->Render();
 
@@ -89,7 +96,7 @@ void PlayState::SpawnBombs(const unsigned amount, int startingPosition)
 	}
 
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> distributionXPosition(startingPosition, 60 * 32);
+	std::uniform_int_distribution<int> distributionXPosition(startingPosition, 30 * 32);
 
 	for (unsigned i = 0; i < amount; i++)
 	{
