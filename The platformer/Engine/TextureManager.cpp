@@ -58,13 +58,11 @@ bool TextureManager::LoadFont(const std::string& id, const std::string& filename
 bool TextureManager::LoadTexture(const std::string& id, const std::string& filename)
 {
     sf::Texture texture;
-    texture.loadFromFile(filename);
-    m_textureMap[id] = sf::Texture(texture);
+    m_textureMap.insert(std::make_pair(id, texture));
     m_textureMap[id].loadFromFile(filename);
 
     sf::Sprite sprite;
-    sprite.setTexture(texture);
-    m_spriteMap[id] = sf::Sprite(sprite);
+    m_spriteMap.insert(std::make_pair(id, sprite));
     m_spriteMap[id].setTexture(m_textureMap[id]);
 
     //m_textureMap[id].loadFromFile(filename);
