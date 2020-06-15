@@ -19,6 +19,7 @@ private:
 	void Movement(const float dt);
 private:
 	bool m_alive = true;
+	sf::Vector2i m_defaultPosition;
 	RigidBody m_body;
 	Animation m_animation;
 	int m_damage;
