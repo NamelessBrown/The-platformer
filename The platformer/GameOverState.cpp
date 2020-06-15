@@ -12,6 +12,10 @@ GameOverState::GameOverState()
 
 GameOverState::~GameOverState()
 {
+	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() * 2.f);
+	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() * 4.f);
+	TextureManager::GetInstance()->GetSprite("start").setScale(TextureManager::GetInstance()->GetSprite("start").getScale() * 6.f);
+	TextureManager::GetInstance()->GetSprite("quit").setScale(TextureManager::GetInstance()->GetSprite("quit").getScale() * 2.f);
 }
 
 void GameOverState::HandleInput()
