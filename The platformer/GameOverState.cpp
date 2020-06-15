@@ -2,10 +2,12 @@
 #include "Engine/TextureManager.h"
 #include "Engine/InputHandler.h"
 #include "Engine/GameStateManager.h"
+#include "Engine/Camera.h"
 #include "MainMenuState.h"
 
 GameOverState::GameOverState()
 {
+	Camera::GetInstance()->SetTarget(Point());
 }
 
 GameOverState::~GameOverState()
@@ -22,6 +24,7 @@ void GameOverState::HandleInput()
 
 void GameOverState::Update(const float dt)
 {
+	Camera::GetInstance()->Update(dt);
 }
 
 void GameOverState::Render()
