@@ -16,7 +16,7 @@ public:
 	~CollisionHandler();
 public:
 	/*ALWAYS INITALIZE A MAP OR IT WILL BE A NULLPTR */
-	bool Init(Map* map);
+	bool Init(Map& map);
 	bool CheckCollision(const sf::IntRect& box, const sf::IntRect& box2);
 	bool MapCollision(const sf::IntRect& box);
 	void Quit();
