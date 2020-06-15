@@ -28,11 +28,22 @@ void Bombs::Render()
 	m_animation.Draw(m_position.x, m_position.y + m_properties.m_height, m_properties.m_width, m_properties.m_height);
 }
 
+bool Bombs::IsAlive() const
+{
+	return m_alive;
+}
+
+const int Bombs::GetDamage() const
+{
+	return m_damage;
+}
+
 void Bombs::Boom()
 {
 	m_properties.m_width = 143;
 	m_properties.m_height = 141;
 	m_animation.SetProperties("dead", 1, 5, 100);
+	m_alive = false;
 }
 
 void Bombs::Movement(const float dt)
