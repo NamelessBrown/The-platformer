@@ -14,6 +14,16 @@ Player::~Player()
 {
 }
 
+const int Player::GetHealth() const
+{
+	return m_health;
+}
+
+void Player::SetHealth(const int health)
+{
+	m_health -= health;
+}
+
 void Player::Update(const float dt)
 {
 	Movement(dt);
@@ -22,6 +32,7 @@ void Player::Update(const float dt)
 
 void Player::Render()
 {
+	TextureManager::GetInstance()->DrawText("font", "Health: " + std::to_string(m_health), 30, m_position.x, m_position.y);
 	m_animation.Draw(m_position.x, m_position.y, m_properties.m_width, m_properties.m_height);
 }
 
