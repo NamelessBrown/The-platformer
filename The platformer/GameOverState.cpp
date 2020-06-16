@@ -3,11 +3,15 @@
 #include "Engine/InputHandler.h"
 #include "Engine/GameStateManager.h"
 #include "Engine/Camera.h"
+#include "Engine/Music.h"
 #include "MainMenuState.h"
 
 GameOverState::GameOverState()
 {
 	Camera::GetInstance()->SetTarget(Point());
+	Music::GetInstance()->LoadMusic("best", "Sounds/You're the Best Around.ogg");
+	Music::GetInstance()->GetMusic("best").setLoop(true);
+	Music::GetInstance()->GetMusic("best").play();
 }
 
 GameOverState::~GameOverState()
@@ -16,6 +20,7 @@ GameOverState::~GameOverState()
 	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() * 4.f);
 	TextureManager::GetInstance()->GetSprite("start").setScale(TextureManager::GetInstance()->GetSprite("start").getScale() * 6.f);
 	TextureManager::GetInstance()->GetSprite("quit").setScale(TextureManager::GetInstance()->GetSprite("quit").getScale() * 2.f);
+	Music::GetInstance()->RemoveSound("best");
 }
 
 void GameOverState::HandleInput()
