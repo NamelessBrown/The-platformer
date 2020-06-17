@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textures>
+    <texture id="background2" source="Textures/background2.jpg"/>
+    <texture id="background3" source="Textures/background3.png"/>
+    <texture id="bomb" source="Textures/sheet1.png"/>
+    <texture id="DDD" source="Textures/DDD.png"/>
+    <texture id="player" source="Textures/player.png"/>
+    <texture id="mainMenuBackground" source="Textures/background.jpg"/>
+</textures>

@@ -10,12 +10,12 @@
 #include <random>
 
 PlayState::PlayState()
+	:m_player(GameObjectProperties("player", { 32, 0 }, 46, 50)), m_goal(GameObjectProperties("DDD", { 250, 360 }, 405, 214))
 {
 	m_level = "level1";
 	m_levelPath = "Levels/level1.tmx";
 
 	m_maps.emplace_back(new Map());
-	Music::GetInstance()->LoadMusic("fath", "Sounds/Faith by Richard Burnish.ogg");
 	Music::GetInstance()->Play("fath");
 	Music::GetInstance()->GetMusic("fath").setLoop(true);
 
@@ -23,67 +23,53 @@ PlayState::PlayState()
 	MapParser::GetInstance()->Load(m_level, m_levelPath);
 	m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
 	CollisionHandler::GetInstance()->Init(*m_maps[0]);
-	TextureManager::GetInstance()->LoadTexture("background2", "Textures/background2.jpg");
-	TextureManager::GetInstance()->LoadTexture("background3", "Textures/background3.png");
-	TextureManager::GetInstance()->LoadTexture("player", "Textures/player.png");
-	TextureManager::GetInstance()->LoadTexture("bomb", "Textures/sheet1.png");
-	TextureManager::GetInstance()->LoadTexture("dead", "Textures/dead.jpg");
-	TextureManager::GetInstance()->LoadTexture("DDD", "Textures/DDD.png");
-	SpawnBombs(10);
-	m_player = new Player(GameObjectProperties("player", {32, 0}, 46, 50));
+	SpawnBombs(5);
 	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() / 2.f);
 	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() / 4.f);
 
-	m_goal = new Goal(GameObjectProperties("DDD", { 250, 360 }, 405, 214));
-
-	Camera::GetInstance()->SetTarget(m_player->GetOrigin());
+	Camera::GetInstance()->SetTarget(m_player.GetOrigin());
 }
 
 PlayState::~PlayState()
 {
-	delete m_player;
-	delete m_goal;
-	
-	for (auto& e : m_bombs)
-	{
-		delete e;
-	}
 
 }
 
 void PlayState::HandleInput()
 {
-	Camera::GetInstance()->SetTarget(m_player->GetOrigin());
+	Camera::GetInstance()->SetTarget(m_player.GetOrigin());
 }
 
 void PlayState::Update(const float dt)
 {
 	Camera::GetInstance()->Update(dt);
-	m_player->Update(dt);
+	m_player.Update(dt);
 
 	BombCollision(dt);
 
-	if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), m_goal->GetCollider().GetColliderBox()))
+	if (CollisionHandler::GetInstance()->CheckCollision(m_player.GetCollider().GetColliderBox(), m_goal.GetCollider().GetColliderBox()))
 	{
 		m_maps.emplace_back(new Map());
 		LoadNewLevel();
 		MapParser::GetInstance()->Load(m_level, m_levelPath);
 		m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
 
-		delete m_goal;
-		delete m_player;
+		m_player = Player(GameObjectProperties("player", { 64, 0 }, 46, 50));
 
-		m_player = new Player(GameObjectProperties("player", { 64, 0 }, 46, 50));
+		const unsigned tileSize = CollisionHandler::GetInstance()->GetCollisionLayer()->GetTileSize();
+		const unsigned tileCol = CollisionHandler::GetInstance()->GetCollisionLayer()->GetNumberOfColumns();
 
 		std::mt19937 rng(std::random_device{}());
-		std::uniform_int_distribution<int> distributionXPosition(250, 500);
-		std::uniform_int_distribution<int> distributionYPosition(0, 250);
-		m_goal = new Goal(GameObjectProperties("DDD", { distributionXPosition(rng) , distributionYPosition(rng) }, 405, 214));
+		std::uniform_int_distribution<int> distributionXPosition(0 + tileSize, (tileCol - tileSize) * tileSize);
+		std::uniform_int_distribution<int> distributionYPosition(150, 250);
+		m_goal = Goal(GameObjectProperties("DDD", { distributionXPosition(rng) , distributionYPosition(rng) }, 405, 214));
+
+		SpawnBombs(5);
 
 		CollisionHandler::GetInstance()->Init(*m_maps[0]);
 	}
 
-	if (m_player->GetHealth() < 0)
+	if (m_player.GetHealth() < 0)
 	{
 		GameStateManager::GetInstance()->ChangeState(new GameOverState());
 		Music::GetInstance()->RemoveSound("fath");
@@ -107,12 +93,12 @@ void PlayState::Render()
 	}
 
 	m_maps[0]->Render();
-	m_player->Render();
-	m_goal->Render();
+	m_player.Render();
+	m_goal.Render();
 
 	for (auto& e: m_bombs)
 	{
-		e->Render();
+		e.Render();
 	}
 }
 
@@ -120,7 +106,7 @@ void PlayState::LoadNewLevel()
 {
 	if (m_currentLevel >= 5)
 	{
-		m_currentLevel = 0;
+		m_currentLevel = 1;
 		m_level = "level1";
 		m_levelPath = "Levels/level1.tmx";
 		return;
@@ -161,12 +147,11 @@ void PlayState::BombCollision(const float dt)
 {
 	for (unsigned i = 0; i < m_bombs.size(); i++)
 	{
-		m_bombs[i]->Update(dt);
+		m_bombs[i].Update(dt);
 
-		if (CollisionHandler::GetInstance()->CheckCollision(m_player->GetCollider().GetColliderBox(), m_bombs[i]->GetCollider().GetColliderBox()))
+		if (CollisionHandler::GetInstance()->CheckCollision(m_player.GetCollider().GetColliderBox(), m_bombs[i].GetCollider().GetColliderBox()))
 		{
-			m_player->SetHealth(m_bombs[i]->GetDamage());
-			delete m_bombs[i];
+			m_player.SetHealth(m_bombs[i].GetDamage());
 			m_bombs.erase(m_bombs.begin() + i);
 		}
 
@@ -176,16 +161,13 @@ void PlayState::BombCollision(const float dt)
 
 void PlayState::SpawnBombs(const unsigned amount, int startingPosition)
 {
-	for (auto& e : m_bombs)
-	{
-		delete e;
-	}
+	m_bombs.clear();
 
 	std::mt19937 rng(std::random_device{}());
 	std::uniform_int_distribution<int> distributionXPosition(startingPosition, 45 * 32);
 
 	for (unsigned i = 0; i < amount; i++)
 	{
-		m_bombs.emplace_back(new Bombs(GameObjectProperties("bomb", {distributionXPosition(rng), 0}, 32, 32)));
+		m_bombs.emplace_back(Bombs(GameObjectProperties("bomb", {distributionXPosition(rng), 0}, 32, 32)));
 	}
 }

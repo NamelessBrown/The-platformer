@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 #include "Engine.h"
 #include "Camera.h"
+#include "tinyxml.h"
 #include <iostream>
 
 TextureManager* TextureManager::s_instance = nullptr;
@@ -42,6 +43,29 @@ const sf::Font& TextureManager::GetFont(const std::string& id) const
 TextureManager::~TextureManager()
 {
     m_spriteMap.clear();
+}
+
+bool TextureManager::ParseTextures(std::string source)
+{
+    TiXmlDocument doc;
+    doc.LoadFile(source.c_str());
+    if (doc.Error())
+    {
+        std::cout << "Failed to load doc %s" << doc.ErrorDesc() << '\n';
+    }
+
+    TiXmlElement* root = doc.RootElement();
+    for (auto e = root->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+    {
+        if (e->ValueTStr() == "texture")
+        {
+            std::string id = e->Attribute("id");
+            std::string src = e->Attribute("source");
+            LoadTexture(id, src);
+        }
+    }
+
+    return true;
 }
 
 bool TextureManager::LoadFont(const std::string& id, const std::string& filename)

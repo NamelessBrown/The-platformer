@@ -8,6 +8,8 @@ class Player : public GameObject
 {
 public:
 	Player(const GameObjectProperties& properties);
+	Player(const Player& player);
+	Player& operator=(const Player& player);
 	~Player();
 public:
 	const int GetHealth() const;

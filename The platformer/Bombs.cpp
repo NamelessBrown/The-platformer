@@ -7,7 +7,7 @@ Bombs::Bombs(const GameObjectProperties& properties)
 	:GameObject(properties), m_damage(0), m_lastSafePosition(0, 0)
 {
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> damageDistribution(0, 75);
+	std::uniform_int_distribution<int> damageDistribution(0, 50);
 	m_damage = damageDistribution(rng);
 	m_animation.SetProperties("bomb", 6, 0, 0);
 	m_body.SetGravity(2);
@@ -22,13 +22,6 @@ Bombs::~Bombs()
 void Bombs::Update(const float dt)
 {
 	Movement(dt);
-	if (m_position.y == m_lastSafePosition.y)
-	{
-		std::mt19937 rng(std::random_device{}());
-		std::uniform_int_distribution<int> locationDistributionX(32, 1000);
-		std::uniform_int_distribution<int> locationDistributionY(50, 100);
-		m_position = sf::Vector2i(locationDistributionX(rng), locationDistributionY(rng));
-	}
 }
 
 void Bombs::Render()
@@ -69,6 +62,14 @@ void Bombs::Movement(const float dt)
 	if (CollisionHandler::GetInstance()->MapCollision(m_collider.GetColliderBox()))
 	{
 		m_position.y = m_lastSafePosition.y;
+
+		const unsigned tileSize = CollisionHandler::GetInstance()->GetCollisionLayer()->GetTileSize();
+		const unsigned tileCol = CollisionHandler::GetInstance()->GetCollisionLayer()->GetNumberOfColumns();
+		std::mt19937 rng(std::random_device{}());
+		std::uniform_int_distribution<int> locationDistributionX(0 + tileSize, (tileCol - tileSize) * tileSize);
+		std::uniform_int_distribution<int> locationDistributionY(0, 25);
+
+		m_position = sf::Vector2i(locationDistributionX(rng), locationDistributionY(rng));
 	}
 
 	//x position

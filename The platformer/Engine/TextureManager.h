@@ -16,6 +16,7 @@ public:
 	static TextureManager* GetInstance();
 	~TextureManager();
 public:
+	bool ParseTextures(std::string source);
 	bool LoadFont(const std::string& id, const std::string& filename);
 	bool LoadTexture(const std::string& id, const std::string& filename);
 	void Remove(const std::string& id);

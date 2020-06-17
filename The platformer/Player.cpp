@@ -10,6 +10,26 @@ Player::Player(const GameObjectProperties& properties)
 	m_body.SetGravity(3);
 }
 
+Player::Player(const Player& player)
+	:GameObject(player.m_properties)
+{
+	*this = player;
+}
+
+Player& Player::operator=(const Player& player)
+{
+	m_animation = player.m_animation;
+	m_body = player.m_body;
+	m_collider = player.m_collider;
+	m_health = player.m_health;
+	m_origin = player.m_origin;
+	m_properties = player.m_properties;
+	m_flip = player.m_flip;
+	m_position = player.m_position;
+	m_lastSafePosition = player.m_lastSafePosition;
+	return *this;
+}
+
 Player::~Player()
 {
 }
@@ -45,13 +65,13 @@ void Player::Movement(const float dt)
 	{
 		m_flip = Flip::left;
 		m_body.ApplyForceX(-2);
-		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, m_flip);
+		m_animation.SetProperties(m_properties.m_textureId, 3, 8, 100, m_flip);
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::D))
 	{
 		m_flip = Flip::right;
 		m_body.ApplyForceX(2);
-		m_animation.SetProperties(m_properties.m_textureId, 3, 3, 100, m_flip);
+		m_animation.SetProperties(m_properties.m_textureId, 3, 8, 100, m_flip);
 	}
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space))
 	{

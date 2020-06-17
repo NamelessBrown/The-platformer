@@ -40,6 +40,11 @@ bool Engine::Init(unsigned width, unsigned height, const std::string& title, boo
 	m_window.setFramerateLimit(framerate);
 	m_windowWidth = m_window.getSize().x;
 	m_windowHeight = m_window.getSize().y;
+	TextureManager::GetInstance()->ParseTextures("Textures/Textures.tml");
+
+	Music::GetInstance()->LoadMusic("fath", "Sounds/Faith by Richard Burnish.ogg");
+	Music::GetInstance()->LoadMusic("dont", "Sounds/Don't Stop Believin'.ogg");
+	Music::GetInstance()->LoadMusic("best", "Sounds/You're the Best Around.ogg");
 
 	GameStateManager::GetInstance()->PushState(new MainMenuState());
 

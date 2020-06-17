@@ -9,7 +9,6 @@
 GameOverState::GameOverState()
 {
 	Camera::GetInstance()->SetTarget(Point());
-	Music::GetInstance()->LoadMusic("best", "Sounds/You're the Best Around.ogg");
 	Music::GetInstance()->GetMusic("best").setLoop(true);
 	Music::GetInstance()->GetMusic("best").play();
 }

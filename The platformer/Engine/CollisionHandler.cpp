@@ -36,6 +36,11 @@ bool CollisionHandler::Init(Map& map)
     return true;
 }
 
+TileLayer* CollisionHandler::GetCollisionLayer() const
+{
+    return m_collisionLayer;
+}
+
 bool CollisionHandler::CheckCollision(const sf::IntRect& box, const sf::IntRect& box2)
 {
     bool overlapX = (box.left < box2.left + box2.width) && (box.left + box.width > box2.left);

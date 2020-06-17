@@ -25,8 +25,8 @@ private:
 	std::string m_levelPath;
 	int m_currentLevel = 1;
 	std::vector<Map*> m_maps;
-	std::vector<Bombs*> m_bombs;
-	Player* m_player = nullptr;
-	Goal* m_goal = nullptr;
+	std::vector<Bombs> m_bombs;
+	Player m_player;
+	Goal m_goal;
 };
 
