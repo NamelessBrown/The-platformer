@@ -1,26 +1,12 @@
 #include "Timer.h"
 
-Timer* Timer::s_instance = nullptr;
-
-Timer* Timer::GetInstance()
-{
-	if (s_instance == nullptr)
-	{
-		s_instance = new Timer();
-	}
-
-	return s_instance;
-}
-
-void Timer::Quit()
-{
-	delete s_instance;
-}
+float Timer::m_deltaTime = 0.f;
+float Timer::m_lastTime = 0.f;
+sf::Clock Timer::m_clock = sf::Clock();
 
 Timer::Timer()
 {
-	m_lastTime = 0.f;
-	m_deltaTime = 0.f;
+
 }
 
 Timer::~Timer()
@@ -39,7 +25,7 @@ void Timer::Tick()
 
 }
 
-const float Timer::GetDeltaTime() const
+const float Timer::GetDeltaTime()
 {
 	return m_deltaTime;
 }

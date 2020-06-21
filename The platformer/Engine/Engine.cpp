@@ -71,7 +71,7 @@ void Engine::Run()
 		HandleEvents();
 		Update();
 		Render();
-		Timer::GetInstance()->Tick();
+		Timer::Tick();
 	}
 }
 
@@ -83,7 +83,7 @@ void Engine::HandleEvents()
 
 void Engine::Update()
 {
-	const float dt = Timer::GetInstance()->GetDeltaTime();
+	const float dt = Timer::GetDeltaTime();
 	GameStateManager::GetInstance()->CurrentState()->Update(dt);
 }
 
@@ -99,7 +99,6 @@ void Engine::Quit()
 	Music::GetInstance()->Quit();
 	Sound::GetInstance()->Quit();
 	GameStateManager::GetInstance()->Quit();
-	Timer::GetInstance()->Quit();
 	MapParser::GetInstance()->Quit();
 	Camera::GetInstance()->Quit();
 	InputHandler::GetInstance()->Quit();

@@ -5,20 +5,18 @@
 class Timer
 {
 public:
-	static Timer* GetInstance();
-	void Quit();
+	Timer();
+	Timer(const Timer&) = delete;
+	Timer operator=(const Timer&) = delete;
 	~Timer();
 public:
-	void Tick();
-	const float GetDeltaTime() const;
-private:
-	Timer();
+	static void Tick();
+	static const float GetDeltaTime();
 private:
 	static constexpr float m_targetFPS = 60.F;
 	static constexpr float m_targetDeltaTime = 2.5F;
-	static Timer* s_instance;
-	float m_deltaTime;
-	float m_lastTime;
-	sf::Clock m_clock;
+	static float m_deltaTime;
+	static float m_lastTime;
+	static sf::Clock m_clock;
 };
 
