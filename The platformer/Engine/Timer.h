@@ -14,7 +14,7 @@ public:
 	static const float GetDeltaTime();
 private:
 	static constexpr float m_targetFPS = 60.F;
-	static constexpr float m_targetDeltaTime = 2.5F;
+	static constexpr float m_targetDeltaTime = 1.5F;
 	static float m_deltaTime;
 	static float m_lastTime;
 	static sf::Clock m_clock;

@@ -46,7 +46,7 @@ bool Engine::Init(unsigned width, unsigned height, const std::string& title, boo
 	Music::GetInstance()->LoadMusic("dont", "Sounds/Don't Stop Believin'.ogg");
 	Music::GetInstance()->LoadMusic("best", "Sounds/You're the Best Around.ogg");
 
-	GameStateManager::GetInstance()->PushState(new MainMenuState());
+	m_gameStateManager.PushState(new MainMenuState());
 
 	if (!m_window.isOpen())
 	{
@@ -58,6 +58,7 @@ bool Engine::Init(unsigned width, unsigned height, const std::string& title, boo
 
 
 Engine::Engine()
+	:m_inputHandler(*InputHandler::GetInstance())
 {
 	m_deltaTime = 60.f;
 	m_windowWidth = 0;
@@ -77,20 +78,21 @@ void Engine::Run()
 
 void Engine::HandleEvents()
 {
-	InputHandler::GetInstance()->EventHandler(m_window);
-	GameStateManager::GetInstance()->CurrentState()->HandleInput();
+	m_inputHandler.EventHandler(m_window);
+	m_gameStateManager.CurrentState()->HandleInput();
 }
 
 void Engine::Update()
 {
 	const float dt = Timer::GetDeltaTime();
-	GameStateManager::GetInstance()->CurrentState()->Update(dt);
+	std::cout << "framerate: " << dt << '\n';
+	m_gameStateManager.CurrentState()->Update(dt);
 }
 
 void Engine::Render()
 {
 	m_window.clear();
-	GameStateManager::GetInstance()->CurrentState()->Render();
+	m_gameStateManager.CurrentState()->Render();
 	m_window.display();
 }
 
@@ -98,7 +100,6 @@ void Engine::Quit()
 {
 	Music::GetInstance()->Quit();
 	Sound::GetInstance()->Quit();
-	GameStateManager::GetInstance()->Quit();
 	MapParser::GetInstance()->Quit();
 	Camera::GetInstance()->Quit();
 	InputHandler::GetInstance()->Quit();

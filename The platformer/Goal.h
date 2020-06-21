@@ -5,7 +5,8 @@
 class Goal : public GameObject
 {
 public:
-	Goal(const GameObjectProperties& properties);
+	Goal(const GameObjectProperties& properties, int scaleDown);
+	Goal& operator=(const Goal&);
 	~Goal();
 public:
 	void Update(const float dt);

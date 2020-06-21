@@ -19,14 +19,14 @@ GameOverState::~GameOverState()
 	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() * 4.f);
 	TextureManager::GetInstance()->GetSprite("start").setScale(TextureManager::GetInstance()->GetSprite("start").getScale() * 6.f);
 	TextureManager::GetInstance()->GetSprite("quit").setScale(TextureManager::GetInstance()->GetSprite("quit").getScale() * 2.f);
-	Music::GetInstance()->RemoveSound("best");
 }
 
 void GameOverState::HandleInput()
 {
 	if (InputHandler::GetInstance()->GetKeyDown(sf::Keyboard::Key::Space))
 	{
-		GameStateManager::GetInstance()->ChangeState(new MainMenuState());
+		GameStateManager::ChangeState(new MainMenuState());
+		Music::GetInstance()->Stop("best");
 	}
 }
 

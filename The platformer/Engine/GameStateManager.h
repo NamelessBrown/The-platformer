@@ -6,20 +6,17 @@
 class GameStateManager
 {
 public:
-	static GameStateManager* GetInstance();
-	~GameStateManager();
-	void Quit();
-	void PushState(GameState* state);
-	void PopState();
-	void ChangeState(GameState* state);
-
-	GameState* CurrentState();
-private:
 	GameStateManager();
 	GameStateManager(const GameStateManager&) = delete;
 	GameStateManager& operator=(const GameStateManager&) = delete;
+	~GameStateManager();
+public:
+	static void PushState(GameState* state);
+	static void PopState();
+	static void ChangeState(GameState* state);
+
+	static GameState* CurrentState();
 private:
-	static GameStateManager* s_instance;
-	std::stack<GameState*> m_states;
+	static std::stack<GameState*> m_states;
 };
 

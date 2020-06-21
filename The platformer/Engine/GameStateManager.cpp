@@ -1,20 +1,10 @@
 #include "GameStateManager.h"
 #include <iostream>
 
-GameStateManager* GameStateManager::s_instance = nullptr;
+std::stack<GameState*> GameStateManager::m_states = std::stack<GameState*>();
 
 GameStateManager::GameStateManager()
 {
-}
-
-GameStateManager* GameStateManager::GetInstance()
-{
-	if (s_instance == nullptr)
-	{
-		s_instance = new GameStateManager();
-	}
-
-	return s_instance;
 }
 
 GameStateManager::~GameStateManager()
@@ -24,11 +14,6 @@ GameStateManager::~GameStateManager()
 		PopState();
 		std::cout << "Pop state!\n";
 	}
-}
-
-void GameStateManager::Quit()
-{
-	delete s_instance;
 }
 
 void GameStateManager::PushState(GameState* state)

@@ -10,7 +10,8 @@
 #include <random>
 
 PlayState::PlayState()
-	:m_player(GameObjectProperties("player", { 32, 0 }, 46, 50)), m_goal(GameObjectProperties("DDD", { 250, 360 }, 405, 214))
+	:m_player(GameObjectProperties("player", { 32, 0 }, 46, 50)), m_goal(GameObjectProperties("DDD", { 250, 360 }, 405, 214), 1),
+	m_textureManager(*TextureManager::GetInstance())
 {
 	m_level = "level1";
 	m_levelPath = "Levels/level1.tmx";
@@ -19,13 +20,13 @@ PlayState::PlayState()
 	Music::GetInstance()->Play("fath");
 	Music::GetInstance()->GetMusic("fath").setLoop(true);
 
-	TextureManager::GetInstance()->LoadFont("font", "Font/times.ttf");
+	m_textureManager.LoadFont("font", "Font/times.ttf");
 	MapParser::GetInstance()->Load(m_level, m_levelPath);
 	m_maps[0] = MapParser::GetInstance()->GetMap(m_level);
 	CollisionHandler::GetInstance()->Init(*m_maps[0]);
 	SpawnBombs(5);
-	TextureManager::GetInstance()->GetSprite("bomb").setScale(TextureManager::GetInstance()->GetSprite("bomb").getScale() / 2.f);
-	TextureManager::GetInstance()->GetSprite("DDD").setScale(TextureManager::GetInstance()->GetSprite("DDD").getScale() / 4.f);
+	m_textureManager.GetSprite("bomb").setScale(m_textureManager.GetSprite("bomb").getScale() / 2.f);
+	m_textureManager.GetSprite("DDD").setScale(m_textureManager.GetSprite("DDD").getScale() / 4.f);
 
 	Camera::GetInstance()->SetTarget(m_player.GetOrigin());
 }
@@ -62,7 +63,7 @@ void PlayState::Update(const float dt)
 		std::mt19937 rng(std::random_device{}());
 		std::uniform_int_distribution<int> distributionXPosition(0 + tileSize, (tileCol - tileSize) * tileSize);
 		std::uniform_int_distribution<int> distributionYPosition(150, 250);
-		m_goal = Goal(GameObjectProperties("DDD", { distributionXPosition(rng) , distributionYPosition(rng) }, 405, 214));
+		m_goal = Goal(GameObjectProperties("DDD", { distributionXPosition(rng) , distributionYPosition(rng) }, 405, 214), 4);
 
 		SpawnBombs(5);
 
@@ -71,8 +72,8 @@ void PlayState::Update(const float dt)
 
 	if (m_player.GetHealth() < 0)
 	{
-		GameStateManager::GetInstance()->ChangeState(new GameOverState());
-		Music::GetInstance()->RemoveSound("fath");
+		GameStateManager::ChangeState(new GameOverState());
+		Music::GetInstance()->Stop("fath");
 	}
 
 }
@@ -81,15 +82,15 @@ void PlayState::Render()
 {
 	if (m_level == "level1" || m_level == "level2")
 	{
-		TextureManager::GetInstance()->Draw("mainMenuBackground", 0, 0);
+		m_textureManager.Draw("mainMenuBackground", 0, 0);
 	}
 	else if (m_level == "level3" || m_level == "leve4")
 	{
-		TextureManager::GetInstance()->Draw("mainMenuBackground", -100, 0);
+		m_textureManager.Draw("mainMenuBackground", -100, 0);
 	}
 	else
 	{
-		TextureManager::GetInstance()->Draw("mainMenuBackground", -500, 0);
+		m_textureManager.Draw("mainMenuBackground", -500, 0);
 	}
 
 	m_maps[0]->Render();

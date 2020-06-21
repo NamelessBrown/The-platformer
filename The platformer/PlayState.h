@@ -21,6 +21,7 @@ private:
 	void BombCollision(const float dt);
 	void SpawnBombs(const unsigned amount, int startingPosition = 250);
 private:
+	TextureManager& m_textureManager;
 	std::string m_level;
 	std::string m_levelPath;
 	int m_currentLevel = 1;

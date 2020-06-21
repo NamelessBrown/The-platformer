@@ -2,6 +2,8 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "InputHandler.h"
+#include "GameStateManager.h"
 
 class Engine
 {
@@ -25,6 +27,9 @@ private:
 private:
 	static Engine* s_instance;
 	sf::RenderWindow m_window;
+
+	InputHandler& m_inputHandler;
+	GameStateManager m_gameStateManager;
 
 	unsigned m_windowWidth;
 	unsigned m_windowHeight;

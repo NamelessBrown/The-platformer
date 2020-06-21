@@ -28,8 +28,8 @@ void MainMenuState::HandleInput()
 
 	if (m_playButton.IsClicked(sf::Mouse::getPosition(Engine::GetInstance()->GetWindow())))
 	{
-		GameStateManager::GetInstance()->ChangeState(new PlayState());
-		Music::GetInstance()->RemoveSound("dont");
+		GameStateManager::ChangeState(new PlayState());
+		Music::GetInstance()->Stop("dont");
 	}
 
 }
