@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include <map>
 
 /*
 	TODO: Add mouse support
@@ -26,7 +26,7 @@ private:
 	void KeyDown(sf::Keyboard::Key key);
 	void KeyUp(sf::Keyboard::Key key);
 private:
-	std::vector<bool> m_keyStates;
+	std::map<sf::Keyboard::Key, bool> m_keyStates;
 	static InputHandler* s_instance;
 	sf::Event m_event = sf::Event();
 	sf::Keyboard::Key m_leaveKey = sf::Keyboard::Key::Escape;

@@ -15,7 +15,11 @@ InputHandler* InputHandler::GetInstance()
 
 InputHandler::InputHandler()
 {
-    m_keyStates.resize(sf::Keyboard::KeyCount);
+    for (int i = 0; i < sf::Keyboard::KeyCount; i++)
+    {
+        m_keyStates.insert(std::pair<sf::Keyboard::Key, bool>((sf::Keyboard::Key)i, false));
+    }
+
 }
 
 void InputHandler::SetEscapeSequence(sf::Keyboard::Key key)
